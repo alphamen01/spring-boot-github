@@ -46,7 +46,7 @@ public class FacturaController {
 		Factura factura =  clienteService.fetchFacturaByIdWithClienteWhithItemFacturaWithProducto(id);    //clienteService.findFacturaById(id);
 		if(factura == null) {
 			flash.addFlashAttribute("error","La factura no existe en la base de datos!");
-			return "redirect:/listar";
+			return "redirect:/index";
 		}
 		
 		model.addAttribute("factura", factura);
@@ -64,7 +64,7 @@ public class FacturaController {
 		 
 		if(cliente == null) {
 			flash.addAttribute("error", "El cliente no existe en la Base de Datos" );
-			return "redirect:/listar";
+			return "redirect:/index";
 		}
 		
 		Factura factura = new Factura();
@@ -133,6 +133,6 @@ public class FacturaController {
 		}
 		flash.addFlashAttribute("error", "La factura no existe en la base de datos, no se puedo eliminar!");
 		
-		return "redirect:/listar";
+		return "redirect:/index";
 	}
 }

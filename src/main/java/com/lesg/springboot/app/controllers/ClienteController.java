@@ -85,7 +85,7 @@ public class ClienteController {
 		Cliente cliente = clienteService.fetchByIdWithFacturas(id);// clienteService.findOne(id);
 		if (cliente == null) {
 			flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
-			return "redirect:/listar";
+			return "redirect:/index";
 		}
 
 		model.put("cliente", cliente);
@@ -94,7 +94,7 @@ public class ClienteController {
 		return "ver";
 	}
 
-	@RequestMapping(value = { "/listar", "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/index", "/" }, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication,
 			HttpServletRequest request,
@@ -135,11 +135,11 @@ public class ClienteController {
 
 		Page<Cliente> clientes = clienteService.findAll(pageRequest);
 
-		PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
+		PageRender<Cliente> pageRender = new PageRender<>("/index", clientes);
 		model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale) /*"Listado de Clientes"*/);
 		model.addAttribute("clientes", clientes);
 		model.addAttribute("page", pageRender);
-		return "listar";
+		return "index";
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -160,11 +160,11 @@ public class ClienteController {
 			cliente = clienteService.findOne(id);
 			if (cliente == null) {
 				flash.addFlashAttribute("error", "El id del cliente no existe en la Base de Datos!");
-				return "redirect:/listar";
+				return "redirect:/index";
 			}
 		} else {
 			flash.addFlashAttribute("error", "El id del cliente no puede ser cero!");
-			return "redirect:/listar";
+			return "redirect:/index";
 		}
 		model.put("cliente", cliente);
 		model.put("titulo", "Editar Cliente");
@@ -208,7 +208,7 @@ public class ClienteController {
 		clienteService.save(cliente);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:listar";
+		return "redirect:index";
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -226,7 +226,7 @@ public class ClienteController {
 			}
 		}
 
-		return "redirect:/listar";
+		return "redirect:/index";
 	}
 
 	private boolean hasRole(String role) {
